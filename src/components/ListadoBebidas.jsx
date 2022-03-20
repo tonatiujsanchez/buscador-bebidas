@@ -3,10 +3,10 @@ import Bebida from "./Bebida";
 
 
 
-const ListadoBebidas = ({ bebidas, busqueda }) => {
+const ListadoBebidas = ({ bebidas, busqueda={} }) => {
 
     return (
-        <Row className="mt-5">
+        <Row className="mt-5 mb-5">
             { bebidas.map( bebida => (
                 <Bebida key={ bebida.idDrink } bebida={ bebida } busqueda={ busqueda }></Bebida>
             ))

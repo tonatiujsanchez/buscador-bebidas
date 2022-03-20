@@ -1,16 +1,20 @@
 import useBebidas from "../hooks/useBebidas"
 import FormularioTipo from "../components/FormularioTipo";
 import ListadoBebidas from './../components/ListadoBebidas';
-
+import Spinner from "./../components/Spinner";
 
 
 const Inicio = () => {
 
-    const { bebidasHome, busqueda } = useBebidas();
+    const { bebidasHome, loadingPages } = useBebidas();
     return (
         <>
             <FormularioTipo/>
-            <ListadoBebidas bebidas={ bebidasHome } busqueda='' />
+            {  loadingPages 
+                ? <div className="mx-auto text-center mt-5"><Spinner /></div> 
+                : <ListadoBebidas bebidas={ bebidasHome } />
+            }
+            
         </>
     )
 }

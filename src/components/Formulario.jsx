@@ -7,14 +7,10 @@ import { Button, Form, Row, Col, Alert } from 'react-bootstrap'
 
 const Formulario = () => {
 
-    const [ busqueda, setBusqueda ] = useState({
-        nombre: '',
-        categoria: ''
-    })
     const [ alerta, setAlerta ] = useState('')
 
     const { categorias } = useCategorias();
-    const { getBebidas } = useBebidas();
+    const { getBebidas, busqueda, setBusqueda } = useBebidas();
 
     const handleSubmit = ( e ) =>{
         e.preventDefault()

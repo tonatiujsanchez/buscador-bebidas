@@ -10,16 +10,21 @@ const BebidasProvider = ({ children }) => {
     const [ tipoBebidas, setTipoBebidas ] = useState('Alcoholic');
 
     const [bebidas, setBebidas] = useState([]);
-    const [busqueda, setBusqueda] = useState({});
+    const [busqueda, setBusqueda] = useState({
+        nombre: '',
+        categoria: ''
+    });
 
     const [modal, setModal] = useState(false);
     const [bebidaId, setBebidaId] = useState(null);
     const [receta, setReceta] = useState({});
     const [cargando, setCargando] = useState(false);
+    const [loadingPages, setLoadingPages] = useState(false);
 
 
 
     useEffect(()=>{
+        setLoadingPages(true);
         const getBebidasHome = async()=> {
             try {
                 const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=${tipoBebidas}`;
@@ -27,6 +32,10 @@ const BebidasProvider = ({ children }) => {
                 setBebidaHome( data.drinks );
             } catch (error) {
                 console.log(error);        
+            }finally{
+                setTimeout(() => {
+                    setLoadingPages(false)
+                }, 500);
             }
         }
         getBebidasHome();
@@ -56,16 +65,18 @@ const BebidasProvider = ({ children }) => {
         setTipoBebidas(tipo)
     }
 
-    // Obtener el listado de bebidas
+    // Obtener el listado de bebidas buscadas por ingrediente y categoria
     const getBebidas = async (busqueda) => {
+        setLoadingPages(true);
         try {
             const { nombre, categoria } = busqueda;
             const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${nombre}&c=${categoria}`;
             const { data } = await axios.get(url);
             setBebidas(data.drinks);
-            setBusqueda(busqueda);
         } catch (error) {
             console.log(error);
+        }finally{
+            setLoadingPages(false);
         }
     }
 
@@ -89,11 +100,13 @@ const BebidasProvider = ({ children }) => {
                 bebidas,
                 getBebidas,
                 busqueda,
+                setBusqueda,
                 modal,
                 handleModal,
                 handleBebidaId,
                 receta,
-                cargando
+                cargando,
+                loadingPages
             }}
         >
             {children}

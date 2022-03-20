@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { CategoriasProvider } from './context/CategoriasProvider';
 import { BebidasProvider } from './context/BebidasProvider';
+import { StorageProvider } from './context/StorageProvider';
 
 import { NavLink } from "react-router-dom"
 
@@ -18,34 +19,38 @@ import ModalBebida from './components/ModalBebida';
 
 
 
+
 function App() {
 
 
     return (
         <CategoriasProvider>
             <BebidasProvider>
-                <header className="py-3">
-                    <h1 className='text-uppercase'>Buscador de bebidas</h1>
-                    <Container>
-                        <Menu className="justify-content-center navbar-dark" activeKey="/">
-                            <NavLink className="navbar-brand" to="/">Incio</NavLink>
-                            <NavLink className="navbar-brand" to="/buscar">Buscar</NavLink>
+                <StorageProvider>
 
-                            <NavLink className="navbar-brand text-light" to="/favoritos">Favoritos</NavLink>
-                        </Menu>
+                    <header className="py-3">
+                        <h1 className='text-uppercase mt-3'>Buscador de bebidas</h1>
+                        <Container>
+                            <Menu className="justify-content-center navbar-dark" activeKey="/">
+                                <NavLink className="navbar-brand" to="/">Incio</NavLink>
+                                <NavLink className="navbar-brand" to="/buscar">Buscar</NavLink>
+
+                                <NavLink className="navbar-brand text-light" to="/favoritos">Favoritos</NavLink>
+                            </Menu>
+                        </Container>
+                    </header>
+                    <Container className='mt-5'>
+                        <Routes>
+                            <Route path='*' element={<Error404 />} />
+                            <Route path='/' element={<Inicio />} />
+                            <Route path='/buscar' element={<Buscar />} />
+                            <Route path='/favoritos' element={<Favoritos />} />
+                        </Routes>
                     </Container>
-                </header>
-                <Container className='mt-5'>
-                    <Routes>
-                        <Route path='*' element={<Error404 />} />
-                        <Route path='/' element={<Inicio />} />
-                        <Route path='/buscar' element={<Buscar />} />
-                        <Route path='/favoritos' element={<Favoritos />} />
-                    </Routes>
-                </Container>
 
-                <ModalBebida />
+                    <ModalBebida />
 
+                </StorageProvider>
             </BebidasProvider>
         </CategoriasProvider>
     )

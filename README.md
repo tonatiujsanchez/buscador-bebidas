@@ -9,6 +9,7 @@
     - React
     - Hooks
     - Contex
+    - React Router
     - Axios
     - React Bootstrap
     - Styled Components
